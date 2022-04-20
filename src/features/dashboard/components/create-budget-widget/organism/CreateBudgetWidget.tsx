@@ -3,6 +3,7 @@ import Loading from "components/loading/Loading";
 import useUserId from "features/auth/hooks/UseUserId";
 import useCreateBudget from "features/dashboard/hooks/UseCreateBudget";
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "../../../../../components/form/Form";
 
 const initialValue = {
@@ -16,8 +17,8 @@ const CreateBudgetWidget: FC = () => {
     state: { loading, data: budget, error },
     mutation,
   } = useCreateBudget();
-
   const userId = useUserId();
+  const navigate = useNavigate();
 
   const onSubmit = async (values: typeof initialValue) => {
     if (!userId) return;
@@ -26,11 +27,10 @@ const CreateBudgetWidget: FC = () => {
     try {
       await mutation(values);
 
-      console.log(budget);
-
       if (error) throw new Error(error.message);
 
-      if (budget) {
+      if (budget?._id) {
+        navigate(`/dashboard/${budget._id}`);
       }
     } catch (e) {
       const error = e as Error;

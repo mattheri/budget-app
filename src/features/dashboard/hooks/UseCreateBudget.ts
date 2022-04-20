@@ -15,15 +15,11 @@ const useCreateBudget = (): MutationHook<Budget, BudgetDTO> => {
       setState({ loading: true });
 
       const budget = await dashboardService.createBuget(budgetDto);
-
-      console.log(budget);
-
       setState({ loading: false, data: budget });
 
       return budget;
     } catch (e) {
       const error = e as Error;
-
       setState({ loading: false, error });
     }
   };
