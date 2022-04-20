@@ -1,38 +1,39 @@
-import * as React from "react"
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { ApolloProvider } from "@apollo/client";
+import { Provider } from "react-redux";
+import { ChakraProvider, theme } from "@chakra-ui/react";
+import { Route, Routes } from "react-router-dom";
+
+import Client from "infra/client";
+
+import ProtectedTemplate from "features/auth/templates/ProtectedTemplate";
+import Layout from "./components/layout/Layout";
+import DashboardTemplate from "./features/dashboard/templates/DashboardTemplate";
+import CashflowLayout from "features/cashflow/components/cashflow-layout/organism/CashflowLayout";
+import CashflowTemplate from "./features/cashflow/templates/CashflowTemplate";
+import Expanses from "features/cashflow/components/expenses/organism/Expenses";
+import LoginTemplate from "features/auth/templates/LoginTemplate";
+
+import store from "./store/store";
+import routes from "router/routes";
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+  <ApolloProvider client={Client}>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <Routes>
+          <Route element={<ProtectedTemplate />}>
+            <Route element={<Layout />}>
+              <Route path={routes.index} element={<DashboardTemplate />} />
+              <Route path={routes.budget} element={<CashflowLayout />}>
+                <Route element={<CashflowTemplate />} />
+                <Route path={routes.expenses} element={<Expanses />} />
+                <Route path={routes.incomes} element={<CashflowTemplate />} />
+              </Route>
+            </Route>
+          </Route>
+          <Route path={routes.login} element={<LoginTemplate />} />
+        </Routes>
+      </ChakraProvider>
+    </Provider>
+  </ApolloProvider>
+);
