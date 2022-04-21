@@ -5,9 +5,7 @@ import Input from "./input/Input";
 import Select from "./select/Select";
 import Datepicker from "./datepicker/Datepicker";
 
-interface Props<
-  InitialValues extends Record<string, boolean | number | string | undefined>
-> {
+interface Props<InitialValues extends object> {
   initialValues: InitialValues;
   onSubmit: (
     values: InitialValues,
@@ -17,9 +15,7 @@ interface Props<
   children?: ReactNode;
 }
 
-const Form = <
-  InitialValues extends Record<string, boolean | number | string | undefined>
->({
+const Form = <InitialValues extends object>({
   initialValues,
   onSubmit,
   validationSchema,

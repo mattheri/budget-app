@@ -1,11 +1,11 @@
-import { BudgetCashflow } from "features/cashflow/cashflow";
+import { BudgetCashflow, Income, Expense } from "features/cashflow/cashflow";
 
 export interface Budget {
   _id: string;
   name: string;
   archived: boolean;
   user: string;
-  cashflow?: BudgetCashflow;
+  cashflow?: Omit<BudgetCashflow, "_id" | "updatedAt" | "createdAt">;
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
@@ -26,4 +26,12 @@ export interface DashboardState {
 
 export interface UpdateBudgetMutationResponse {
   updateBudget: PartialBy<Budget, "cashflow">;
+}
+
+export class Cashflow implements BudgetCashflow {
+  _id: string = "";
+  createdAt: string = "";
+  updatedAt: string = "";
+  incomes: Income[] = [];
+  expenses: Expense[] = [];
 }

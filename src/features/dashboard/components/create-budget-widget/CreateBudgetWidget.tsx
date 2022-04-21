@@ -5,12 +5,17 @@ import useAddStoreDashboard from "features/dashboard/hooks/UseAddStoreDashboard"
 import useCreateBudget from "features/dashboard/hooks/UseCreateBudget";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from "../../../../../components/form/Form";
+import Form from "components/form/Form";
+import { BudgetDTO } from "features/dashboard/dashboard";
 
-const initialValue = {
+const initialValue: BudgetDTO = {
   name: "",
   archived: false,
   user: "",
+  cashflow: {
+    expenses: [],
+    incomes: [],
+  },
 };
 
 const CreateBudgetWidget: FC = () => {

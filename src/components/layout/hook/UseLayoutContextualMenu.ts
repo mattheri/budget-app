@@ -1,8 +1,8 @@
 import AddExpenseWidget from "features/cashflow/components/widgets/organism/AddExpenseWidget";
 import BackToDashboardWidget from "features/dashboard/components/back-to-dashboard-widget/BackToDashboardWidget";
 import { useLocation } from "react-router-dom";
-import AddIncomeWidget from "../../../features/cashflow/components/widgets/organism/AddIncomeWidget";
-import CreateBudgetWidget from "../../../features/dashboard/components/create-budget-widget/organism/CreateBudgetWidget";
+import AddIncomeWidget from "features/cashflow/components/widgets/organism/AddIncomeWidget";
+import CreateBudgetWidget from "features/dashboard/components/create-budget-widget/CreateBudgetWidget";
 
 const useLayoutContextualMenu = () => {
   const location = useLocation();
