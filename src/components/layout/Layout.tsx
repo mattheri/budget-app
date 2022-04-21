@@ -46,19 +46,21 @@ const Layout: FC = () => {
             <DrawerHeader>{title}</DrawerHeader>
 
             <DrawerBody>
-              {menu.map(({ element: Element, title, additionalProps }) => (
-                <Box marginBottom="1.5rem">
-                  <VStack gap="1rem" alignItems="start">
-                    <Heading as="h5" width="100%" size="sm">
-                      {title}
-                    </Heading>
-                    <Divider />
-                    <Box width="100%">
-                      <Element {...additionalProps} />
-                    </Box>
-                  </VStack>
-                </Box>
-              ))}
+              {menu.map(
+                ({ element: Element, title, additionalProps }, index) => (
+                  <Box key={index} marginBottom="1.5rem">
+                    <VStack gap="1rem" alignItems="start">
+                      <Heading as="h5" width="100%" size="sm">
+                        {title}
+                      </Heading>
+                      <Divider />
+                      <Box width="100%">
+                        <Element {...additionalProps} />
+                      </Box>
+                    </VStack>
+                  </Box>
+                )
+              )}
             </DrawerBody>
           </DrawerContent>
         </Drawer>

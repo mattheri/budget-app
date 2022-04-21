@@ -1,4 +1,4 @@
-import { useAsync } from "react-use";
+import { useAsyncRetry } from "react-use";
 import DashboardService from "../service/dashboard";
 import useUserId from "features/auth/hooks/UseUserId";
 
@@ -7,7 +7,7 @@ const dashboardService = new DashboardService();
 const useGetBudgets = () => {
   const id = useUserId();
 
-  return useAsync(async () => {
+  return useAsyncRetry(async () => {
     if (!id) return [];
 
     return await dashboardService.getBudgets(id);

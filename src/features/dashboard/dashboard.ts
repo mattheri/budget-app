@@ -19,3 +19,11 @@ export interface Budgets {
 export interface CreateBudgetMutationResponse {
   createBudget: PartialBy<Budget, "cashflow">;
 }
+
+export interface DashboardState {
+  budgets: Budget[];
+}
+
+export interface UpdateBudgetMutationResponse {
+  updateBudget: PartialBy<Budget, "cashflow">;
+}

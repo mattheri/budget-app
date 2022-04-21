@@ -1,6 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import Loading from "components/loading/Loading";
 import useUserId from "features/auth/hooks/UseUserId";
+import useAddStoreDashboard from "features/dashboard/hooks/UseAddStoreDashboard";
 import useCreateBudget from "features/dashboard/hooks/UseCreateBudget";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,22 +15,24 @@ const initialValue = {
 
 const CreateBudgetWidget: FC = () => {
   const {
-    state: { loading, data: budget, error },
+    state: { loading, error },
     mutation,
   } = useCreateBudget();
   const userId = useUserId();
   const navigate = useNavigate();
+  const addBudgetToStore = useAddStoreDashboard();
 
   const onSubmit = async (values: typeof initialValue) => {
     if (!userId) return;
     values.user = userId;
 
     try {
-      await mutation(values);
+      const budget = await mutation(values);
 
       if (error) throw new Error(error.message);
 
       if (budget?._id) {
+        addBudgetToStore(budget);
         navigate(`/budget/${budget._id}`);
       }
     } catch (e) {

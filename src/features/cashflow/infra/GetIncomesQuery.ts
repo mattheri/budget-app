@@ -1,13 +1,13 @@
 import { gql } from "@apollo/client";
 
-const getExpensesQuery = gql`
+const getIncomesQuery = gql`
   query GetExpenses($cashflowId: ID!) {
     cashflow(_id: $cashflowId) {
-      expenses {
+      incomes {
         name
         amount
         date
-        skippable
+        oneTime
         category {
           label
           value
@@ -26,4 +26,4 @@ const getExpensesQuery = gql`
   }
 `;
 
-export default getExpensesQuery;
+export default getIncomesQuery;

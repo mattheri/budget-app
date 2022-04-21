@@ -1,19 +1,12 @@
 import { FC } from "react";
-import { Budget } from "../../../dashboard";
-import Container from "../atom/Container";
+import BoardContainer from "../molecule/BoardContainer";
 import BudgetList from "../molecule/BudgetList";
 
-interface Props {
-  budgets: Budget[];
-}
-
-const Board: FC<Props> = ({ budgets }) => {
+const Board: FC = () => {
   return (
-    <>
-      <Container>
-        <BudgetList budgets={budgets} />
-      </Container>
-    </>
+    <BoardContainer>
+      <BudgetList />
+    </BoardContainer>
   );
 };
 
