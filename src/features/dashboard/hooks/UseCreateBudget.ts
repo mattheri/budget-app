@@ -1,36 +1,32 @@
-import { AsyncState, MutationHook } from "infra/infra";
-import { useState } from "react";
+import CashflowService from "features/cashflow/service/cashflow";
+import { useAsyncFn } from "react-use";
 import { Budget, BudgetDTO } from "../dashboard";
 import DashboardService from "../service/dashboard";
 
 const dashboardService = new DashboardService();
+const cashflowService = new CashflowService();
 
-const useCreateBudget = (): MutationHook<Budget, BudgetDTO> => {
-  const [state, setState] = useState<AsyncState<Budget>>({
-    loading: false,
-  });
+const useCreateBudget = () => {
+  const createNewBudget = async (
+    budgetDto: BudgetDTO
+  ): Promise<Budget | undefined> => {
+    const cashflow = await cashflowService.createCashflow({
+      expenses: [],
+      incomes: [],
+    });
+    const budget = await dashboardService.createBuget({
+      ...budgetDto,
+      cashflow,
+    });
 
-  const createNewBudget = async (budgetDto: BudgetDTO) => {
-    try {
-      setState({ loading: true });
-
-      const budget = await dashboardService.createBuget(budgetDto);
-
-      console.log(budget);
-
-      setState({ loading: false, data: budget });
-
-      return budget;
-    } catch (e) {
-      const error = e as Error;
-
-      setState({ loading: false, error });
-    }
+    return budget;
   };
+
+  const [state, mutation] = useAsyncFn(createNewBudget, []);
 
   return {
     state,
-    mutation: createNewBudget,
+    mutation,
   };
 };
 

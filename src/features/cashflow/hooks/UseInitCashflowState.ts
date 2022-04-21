@@ -1,28 +1,30 @@
 import { useEffect } from "react";
-import InMemoryDatabase, {
-  MemoryDatabaseKey,
-} from "services/in-memory-database";
-import { Expense, Income } from "../cashflow";
+import { useParams } from "react-router-dom";
+import { useAsync } from "react-use";
+import CashflowService from "../service/cashflow";
 import useAddExpense from "./UseAddExpense";
 import useAddIncome from "./UseAddIncome";
 
-const incomeMemoryDatabase = new InMemoryDatabase<Income>(
-  MemoryDatabaseKey.INCOMES,
-  true
-);
-const expenseMemoryDatabase = new InMemoryDatabase<Expense>(
-  MemoryDatabaseKey.EXPENSES,
-  true
-);
+const cashflowService = new CashflowService();
 
 const useInitCashflowState = () => {
   const addIncome = useAddIncome();
   const addExpense = useAddExpense();
+  const params = useParams();
+  const currentBudgetId = params.id;
+
+  const { value: cashflow, error } = useAsync(async () => {
+    if (!currentBudgetId) return;
+
+    return await cashflowService.getCashflow(currentBudgetId);
+  }, [currentBudgetId]);
 
   useEffect(() => {
-    addIncome(incomeMemoryDatabase.get());
-    addExpense(expenseMemoryDatabase.get());
-  }, [addExpense, addIncome]);
+    if (!cashflow || error) return;
+
+    addIncome(cashflow.incomes);
+    addExpense(cashflow.expenses);
+  }, [addExpense, addIncome, error, cashflow]);
 };
 
 export default useInitCashflowState;

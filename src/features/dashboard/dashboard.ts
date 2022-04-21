@@ -5,12 +5,20 @@ export interface Budget {
   name: string;
   archived: boolean;
   user: string;
-  cashflow?: Omit<BudgetCashflow, "_id" | "updatedAt" | "createdAt">;
+  cashflow?: BudgetCashflow;
+}
+
+export interface BudgetCashflowDTO {
+  _id: string;
+  incomes: Income[];
+  expenses: Expense[];
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export type BudgetDTO = PartialBy<Omit<Budget, "_id">, "cashflow">;
+export interface BudgetDTO extends Omit<Budget, "_id" | "cashflow"> {
+  cashflow?: PartialBy<BudgetCashflowDTO, "incomes" | "expenses">;
+}
 
 export interface Budgets {
   budgetByUserId: Budget[];

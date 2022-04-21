@@ -1,26 +1,12 @@
 import { gql } from "@apollo/client";
+import { EXPENSE_FIELDS } from "./CashflowFragments";
 
 const getExpensesQuery = gql`
+  ${EXPENSE_FIELDS}
   query GetExpenses($cashflowId: ID!) {
     cashflow(_id: $cashflowId) {
       expenses {
-        name
-        amount
-        date
-        skippable
-        category {
-          label
-          value
-        }
-        frequency {
-          _id
-          createdAt
-          updatedAt
-          value {
-            label
-            value
-          }
-        }
+        ...ExpenseFields
       }
     }
   }

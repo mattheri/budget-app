@@ -12,10 +12,6 @@ const initialValue: BudgetDTO = {
   name: "",
   archived: false,
   user: "",
-  cashflow: {
-    expenses: [],
-    incomes: [],
-  },
 };
 
 const CreateBudgetWidget: FC = () => {

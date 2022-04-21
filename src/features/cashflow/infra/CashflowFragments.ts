@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const INCOME_FIELDS = gql`
-  fragment IncomeFields on CashflowIncome {
+  fragment IncomeFields on Income {
     _id
     name
     amount
@@ -24,7 +24,7 @@ export const INCOME_FIELDS = gql`
 `;
 
 export const EXPENSE_FIELDS = gql`
-  fragment ExpenseFields on CashflowExpense {
+  fragment ExpenseFields on Expense {
     _id
     name
     amount

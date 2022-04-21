@@ -6,12 +6,13 @@ const initialState: DashboardState = {
   budgets: [],
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const dashboardSlice = createSlice({
+  name: "dashboard",
   initialState,
   reducers: dashboardReducers,
 });
 
-export const { addBudget, removeBudget, replaceAllBudgets } = authSlice.actions;
+export const { addBudget, removeBudget, replaceAllBudgets } =
+  dashboardSlice.actions;
 
-export default authSlice.reducer;
+export default dashboardSlice.reducer;

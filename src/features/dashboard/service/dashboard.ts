@@ -27,7 +27,7 @@ class DashboardService {
   async createBuget({ name, archived, user, cashflow }: BudgetDTO) {
     const { data } = await this.client.mutate<CreateBudgetMutationResponse>({
       mutation: createBudgetMutation,
-      variables: { name, archived, token: user, cashflow },
+      variables: { name, archived, token: user, cashflow: cashflow?._id },
     });
 
     return data?.createBudget;
@@ -35,10 +35,9 @@ class DashboardService {
 
   async updateBudget(budget: Budget) {
     const budgetId = budget._id;
-    const budgetWithoutId: BudgetDTO = {
+    const budgetWithoutId = {
       name: budget.name,
       archived: budget.archived,
-      cashflow: budget.cashflow,
       user: budget.user,
     };
 

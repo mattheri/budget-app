@@ -5,7 +5,9 @@ import { addExpense } from "features/cashflow/cashflowSlice";
 const useAddExpense = () => {
   const dispatch = useAppDispatch();
 
-  return (expense: Expense[]) => dispatch(addExpense(expense));
+  return (expense: Expense[]) => {
+    dispatch(addExpense(expense));
+  };
 };
 
 export default useAddExpense;

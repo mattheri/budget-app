@@ -3,6 +3,7 @@ import { CashFlowState } from "./cashflow";
 import { cashflowReducers } from "./cashflowReducers";
 
 const initialState: CashFlowState = {
+  _id: "",
   income: [],
   expense: [],
 };

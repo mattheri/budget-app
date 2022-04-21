@@ -30,6 +30,28 @@ export interface BudgetCashflow {
 }
 
 export interface CashFlowState {
+  _id: string;
   income: Income[];
   expense: Expense[];
+}
+
+export interface CashFlowQueryResponse {
+  budget: {
+    cashflow: BudgetCashflow;
+  };
+}
+
+export interface UniqueCashflowQueryResponse {
+  cashflow: BudgetCashflow;
+}
+
+export type CashflowDTO = Omit<
+  BudgetCashflow,
+  "_id" | "createdAt" | "updatedAt"
+>;
+
+export interface CreateCashflowMutationResponse {
+  createCashflow: {
+    _id: string;
+  };
 }
