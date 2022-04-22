@@ -28,6 +28,10 @@ export const App = () => (
                 <Route element={<CashflowTemplate />} />
                 <Route path={routes.expenses} element={<Expanses />} />
                 <Route path={routes.incomes} element={<CashflowTemplate />} />
+                <Route
+                  path={`${routes.incomes}/:id`}
+                  element={<CashflowTemplate />}
+                />
               </Route>
             </Route>
           </Route>
