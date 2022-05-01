@@ -15,6 +15,7 @@ import LoginTemplate from "features/auth/templates/LoginTemplate";
 
 import store from "./store/store";
 import routes from "router/routes";
+import AuthTemplate from "features/auth/templates/AuthTemplate";
 
 export const App = () => (
   <ApolloProvider client={Client}>
@@ -32,6 +33,7 @@ export const App = () => (
             </Route>
           </Route>
           <Route path={routes.login} element={<LoginTemplate />} />
+          <Route path={routes.googleAuth} element={<AuthTemplate />} />
         </Routes>
       </ChakraProvider>
     </Provider>

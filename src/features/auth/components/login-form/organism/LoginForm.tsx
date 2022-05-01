@@ -1,23 +1,34 @@
-import { Box, Container, IconButton } from "@chakra-ui/react";
+import { Box, Container, Divider } from "@chakra-ui/react";
+import Loading from "components/loading/Loading";
 import useAuthenticate from "features/auth/hooks/UseAuthenticate";
-import { FC } from "react";
-import { FaGoogle } from "react-icons/fa";
+import { FC, useEffect, useState } from "react";
+import EmailAndPasswordForm from "../molecule/EmailAndPasswordForm";
+import GoogleForm from "../molecule/GoogleForm";
 
 const LoginForm: FC = () => {
+  const [loading, setLoading] = useState(false);
   const authenticate = useAuthenticate();
 
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+    };
+  }, []);
+
+  const onButtonClick = () => {
+    setLoading(true);
+    authenticate();
+  };
+
   return (
-    <Container>
-      <Box>
-        <IconButton
-          icon={<FaGoogle />}
-          aria-label="button"
-          onClick={authenticate}
-        >
-          Login
-        </IconButton>
-      </Box>
-    </Container>
+    <Box as="section" height="100vh" width="100vw" paddingBlock="10rem">
+      <Container>
+        <EmailAndPasswordForm />
+        <Divider />
+        <GoogleForm onClick={onButtonClick} />
+      </Container>
+      {loading && <Loading />}
+    </Box>
   );
 };
 

@@ -1,6 +1,7 @@
 const routes = {
   index: "/",
   login: "/login",
+  googleAuth: "/google-auth",
   budget: "/budget/:id",
   buildBudgetRoute: (id: string) => `/budget/${id}`,
   expenses: "expenses",

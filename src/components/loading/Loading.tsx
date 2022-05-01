@@ -11,9 +11,9 @@ const Loading: FC = () => {
         top="0"
         left="0"
         backgroundColor="blackAlpha.600"
-        zIndex="-1"
+        zIndex="1"
       />
-      <Spinner size="xl" zIndex="1" color="white" />
+      <Spinner size="xl" zIndex="2" color="white" />
     </Grid>
   );
 };

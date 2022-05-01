@@ -1,23 +1,14 @@
-import { useNavigate } from "react-router-dom";
-
 import AuthService from "../service/auth";
-
-import routes from "router/routes";
-import useAddUser from "./UseAddUser";
 
 const authService = new AuthService();
 
 const useAuthenticate = () => {
-  const navigate = useNavigate();
-  const addUser = useAddUser();
-
   return async () => {
-    const user = await authService.login();
+    const loginUrl = await authService.getLoginUrl();
 
-    if (!user?._id) return;
+    if (!loginUrl) return;
 
-    addUser(user);
-    navigate(routes.index);
+    window.location.href = loginUrl;
   };
 };
 

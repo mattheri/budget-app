@@ -14,10 +14,16 @@ class AuthService {
   tokenKey = "token";
   loginUrl = "login";
 
-  private async getLoginUrl() {
-    return await this.client.query<GetLoginUrlQueryResponse>({
+  public async getLoginUrl() {
+    const {
+      data: {
+        getLoginUrlsForUser: { GOOGLE },
+      },
+    } = await this.client.query<GetLoginUrlQueryResponse>({
       query: getLoginUrlQuery,
     });
+
+    return GOOGLE;
   }
 
   private async storeJWT(token: string) {
@@ -51,17 +57,11 @@ class AuthService {
     return data.authForUser.user;
   }
 
-  async login() {
-    const {
-      data: {
-        getLoginUrlsForUser: { GOOGLE },
-      },
-    } = await this.getLoginUrl();
-
+  async login(code: string) {
     const { data } = await this.client.mutate<LoginForUserMutationResponse>({
       mutation: loginUserMutation,
       variables: {
-        code: GOOGLE,
+        code: code,
         service: AuthProvider.GOOGLE,
       },
     });
