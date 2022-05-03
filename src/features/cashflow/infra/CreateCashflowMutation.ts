@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const createCashflowMutation = gql`
+const CreateCashflowMutation = gql`
   mutation CreateCashflow($input: CashflowInput!) {
     createCashflow(input: $input) {
       _id
@@ -8,4 +8,4 @@ const createCashflowMutation = gql`
   }
 `;
 
-export default createCashflowMutation;
+export default CreateCashflowMutation;

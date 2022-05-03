@@ -1,41 +1,51 @@
-import { Box, Button, VStack } from "@chakra-ui/react";
+// Types
 import { FormikHelpers } from "formik";
 import { FC } from "react";
+import { Expense, ExpenseDTO } from "features/cashflow/cashflow";
+
+// Library components
+import { Box, Button, VStack } from "@chakra-ui/react";
+
+// Components
 import Form from "components/form/Form";
+import CashflowSelect from "../../cashflow-select/CashflowSelect";
+
+// Services
 import InMemoryDatabase, {
   MemoryDatabaseKey,
 } from "services/in-memory-database";
-import { Expense, ExpenseDTO } from "features/cashflow/cashflow";
-import { useParams } from "react-router-dom";
-import useAddExpense from "features/cashflow/hooks/UseAddExpense";
-import dayjs from "dayjs";
-import FREQUENCIES from "features/cashflow/constants/frequencies";
-import CATEGORIES from "features/cashflow/constants/categories";
 
-const inMemoryDatabase = new InMemoryDatabase<Expense>(
-  MemoryDatabaseKey.EXPENSES,
-  true
-);
+// Library hooks
+import { useParams } from "react-router-dom";
+
+// Hooks
+import useAddExpense from "features/cashflow/hooks/UseAddExpense";
+
+// Utilities
+import formatDate from "utils/format-date";
+
+// Constants
+import FREQUENCIES from "features/cashflow/constants/frequencies";
 
 const initialValues: ExpenseDTO = {
   name: "",
   amount: 0,
-  frequency: "monthly",
+  frequency: {
+    label: "Monthly",
+    value: "monthly",
+    _id: "",
+  },
   category: "",
-  date: dayjs().format("YYYY-MM-DD"),
+  date: formatDate(),
 };
 
 const AddExpenseWidget: FC = () => {
   const params = useParams();
-  const addExpense = useAddExpense();
-  inMemoryDatabase.subscribe(addExpense);
 
   const onSubmit = (
     values: typeof initialValues,
     helpers?: FormikHelpers<typeof initialValues>
   ) => {
-    inMemoryDatabase.set({ ...values, budgetId: Number(params.id) });
-
     helpers?.resetForm();
   };
 
@@ -55,10 +65,10 @@ const AddExpenseWidget: FC = () => {
             placeholder="Frequency"
             options={FREQUENCIES}
           />
-          <Form.Select
+          <CashflowSelect
+            type="expense"
             name="category"
             placeholder="Category"
-            options={CATEGORIES}
           />
           <Form.Datepicker name="date" placeholder="Date" />
           <Button type="submit" w="100%" colorScheme="messenger">

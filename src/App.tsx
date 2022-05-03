@@ -1,10 +1,13 @@
+// Library components
 import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 
+// Services
 import Client from "infra/client";
 
+// Components
 import ProtectedTemplate from "features/auth/templates/ProtectedTemplate";
 import Layout from "./components/layout/Layout";
 import DashboardTemplate from "./features/dashboard/templates/DashboardTemplate";
@@ -12,10 +15,13 @@ import CashflowLayout from "features/cashflow/components/cashflow-layout/organis
 import CashflowTemplate from "./features/cashflow/templates/CashflowTemplate";
 import Expanses from "features/cashflow/components/expenses/organism/Expenses";
 import LoginTemplate from "features/auth/templates/LoginTemplate";
-
-import store from "./store/store";
-import routes from "router/routes";
 import AuthTemplate from "features/auth/templates/AuthTemplate";
+
+// Utils
+import routes from "router/routes";
+
+// Store
+import store from "./store/store";
 
 export const App = () => (
   <ApolloProvider client={Client}>

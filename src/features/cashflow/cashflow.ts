@@ -1,8 +1,14 @@
+export interface Frequency {
+  _id: string;
+  label: string;
+  value: string;
+}
+
 export interface CashFlow {
   _id: string;
   name: string;
   amount: number;
-  frequency: "weekly" | "biweekly" | "monthly" | "yearly";
+  frequency: Frequency;
   category: string;
   budgetId: number;
 }
@@ -15,6 +21,18 @@ export type Income = CashFlow & {
 export type Expense = CashFlow & {
   date?: string;
   skipabble?: boolean;
+};
+
+export type DatabaseExpense = Expense & {
+  frequency: {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    value: {
+      label: string;
+      value: string;
+    };
+  };
 };
 
 export type IncomeDTO = Omit<Income, "_id" | "budgetId">;
@@ -54,4 +72,18 @@ export interface CreateCashflowMutationResponse {
   createCashflow: {
     _id: string;
   };
+}
+
+export interface CreateExpenseMutationResponse {
+  createExpense: {
+    _id: string;
+  };
+}
+
+export interface UpdateExpenseMutationResponse {
+  updateExpense: DatabaseExpense;
+}
+
+export interface UpdateCashflowMutationResponse {
+  updateCashflow: BudgetCashflow;
 }

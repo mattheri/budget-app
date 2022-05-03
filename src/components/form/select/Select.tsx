@@ -8,14 +8,15 @@ interface SelectOption {
   label: string;
 }
 
-interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+export interface SelectProps
+  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> {
   name: string;
   options: SelectOption[];
   helperText?: string;
   as?: As;
 }
 
-const Select: FC<Props> = ({ name, options, helperText, ...rest }) => {
+const Select: FC<SelectProps> = ({ name, options, helperText, ...rest }) => {
   const [
     { value, name: inputName, onChange, onBlur },
     { initialTouched, touched, error, initialError, initialValue },

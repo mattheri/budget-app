@@ -2,11 +2,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { CashFlowState, Expense, Income } from "./cashflow";
 
 export const cashflowReducers = {
-  addIncome: (state: CashFlowState, { payload }: PayloadAction<Income[]>) => {
-    state.income = payload;
+  addIncome: (state: CashFlowState, { payload }: PayloadAction<Income>) => {
+    state.income.push(payload);
   },
-  addExpense: (state: CashFlowState, { payload }: PayloadAction<Expense[]>) => {
-    state.expense = payload;
+  addExpense: (state: CashFlowState, { payload }: PayloadAction<Expense>) => {
+    state.expense.push(payload);
   },
   removeIncome: (state: CashFlowState, { payload }: PayloadAction<Income>) => {
     const incomeToRemove = state.income.find(

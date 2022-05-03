@@ -1,11 +1,20 @@
-import { Box, Flex, Grid, VStack } from "@chakra-ui/react";
-import Form from "components/form/Form";
+// Types
 import { Expense as CashExpense } from "features/cashflow/cashflow";
-import CATEGORIES from "features/cashflow/constants/categories";
-import FREQUENCIES from "features/cashflow/constants/frequencies";
 import { FC } from "react";
-import useExpenseContext from "../hook/UseExpenseContext";
+
+// Library components
+import { Box, Flex, Grid, VStack } from "@chakra-ui/react";
+
+// Components
+import Form from "components/form/Form";
 import ExpenseControls from "./ExpanseControls";
+
+// Constants
+import { EXPENSE_CATEGORIES } from "features/cashflow/constants/categories";
+import FREQUENCIES from "features/cashflow/constants/frequencies";
+
+// Hooks
+import useExpenseContext from "../hook/UseExpenseContext";
 
 interface Props {
   expense: CashExpense;
@@ -61,7 +70,7 @@ const Expense: FC<Props> = ({ expense }) => {
             <Form.Select
               name="category"
               placeholder="Category"
-              options={CATEGORIES}
+              options={EXPENSE_CATEGORIES}
             />
           </Grid>
           <Form.Datepicker name="date" placeholder="Date" />

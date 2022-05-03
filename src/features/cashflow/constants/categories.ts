@@ -1,4 +1,4 @@
-const CATEGORIES = [
+export const EXPENSE_CATEGORIES = [
   { label: "Food", value: "food" },
   { label: "Transportation", value: "transportation" },
   { label: "Utilities", value: "utilities" },
@@ -8,4 +8,9 @@ const CATEGORIES = [
   { label: "Other", value: "other" },
 ];
 
-export default CATEGORIES;
+export const INCOME_CATEGORIES = [
+  { label: "Government", value: "government" },
+  { label: "Investment", value: "investment" },
+  { label: "Other", value: "other" },
+  { label: "Employment", value: "employment" },
+];

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { CASHFLOW_FIELDS } from "./CashflowFragments";
 
-const getCashflowQuery = gql`
+const GetCashflowQuery = gql`
   ${CASHFLOW_FIELDS}
   query GetCashflow($budgetId: ID!) {
     budget(_id: $budgetId) {
@@ -12,4 +12,4 @@ const getCashflowQuery = gql`
   }
 `;
 
-export default getCashflowQuery;
+export default GetCashflowQuery;

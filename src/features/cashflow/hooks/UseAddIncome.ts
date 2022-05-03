@@ -5,7 +5,7 @@ import { addIncome } from "../cashflowSlice";
 const useAddIncome = () => {
   const dispatch = useAppDispatch();
 
-  return (income: Income[]) => dispatch(addIncome(income));
+  return (income: Income) => dispatch(addIncome(income));
 };
 
 export default useAddIncome;
