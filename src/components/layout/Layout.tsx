@@ -1,4 +1,10 @@
-import { FC, useRef } from "react";
+import {
+  FC,
+  MutableRefObject,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import {
   Drawer,
   DrawerBody,
@@ -11,19 +17,33 @@ import {
   useDisclosure,
   Button,
   Stack,
-  Heading,
-  Divider,
-  VStack,
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import useLayoutContextualMenu from "./hook/UseLayoutContextualMenu";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 
+export type SideBarHook = (el: JSX.Element) => void;
+export type SideBarTitle = (title: string) => void;
+
+interface SideBarHookRef {
+  hook: SideBarHook;
+  title: SideBarTitle;
+}
+
+export let sideBarHookRef: MutableRefObject<SideBarHookRef | null> = {
+  current: null,
+};
+
 const Layout: FC = () => {
+  const [Elements, setElements] = useState<JSX.Element | null>(() => null);
+  const [title, setTitle] = useState<string>("");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const openMenuButtonRef = useRef(null);
+  sideBarHookRef = useRef(null);
 
-  const { title, menu } = useLayoutContextualMenu();
+  useImperativeHandle(sideBarHookRef, () => ({
+    hook: (el: JSX.Element) => setElements(el),
+    title: (title: string) => setTitle(title),
+  }));
 
   return (
     <Flex direction="column">
@@ -45,23 +65,7 @@ const Layout: FC = () => {
             <DrawerCloseButton />
             <DrawerHeader>{title}</DrawerHeader>
 
-            <DrawerBody>
-              {menu.map(
-                ({ element: Element, title, additionalProps }, index) => (
-                  <Box key={index} marginBottom="1.5rem">
-                    <VStack gap="1rem" alignItems="start">
-                      <Heading as="h5" width="100%" size="sm">
-                        {title}
-                      </Heading>
-                      <Divider />
-                      <Box width="100%">
-                        <Element {...additionalProps} />
-                      </Box>
-                    </VStack>
-                  </Box>
-                )
-              )}
-            </DrawerBody>
+            <DrawerBody>{Elements ? Elements : null}</DrawerBody>
           </DrawerContent>
         </Drawer>
       </Box>
